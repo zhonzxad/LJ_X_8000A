@@ -229,7 +229,7 @@ BEGIN
 END
 
 IDD_LJX_DLLSAMPLEALL_DIALOG DIALOGEX 0, 0, 580, 490
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "DLL Function Sample"
 FONT 9, "MS UI Gothic", 0, 0, 0x1
@@ -242,10 +242,10 @@ IDD_SINGLEFUNCDLG DIALOGEX 0, 0, 662, 448
 STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
 FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "Connection / Result",IDC_STATIC_CONNECTIONANDRESULT,1,0,653,143
-    GROUPBOX        "Operations for the DLL",IDC_STATIC,6,8,168,29
+    GROUPBOX        "连接/结果",IDC_STATIC_CONNECTIONANDRESULT,1,0,653,143
+    GROUPBOX        "动态链接中的操作",IDC_STATIC,6,8,168,29
     PUSHBUTTON      "初始化",IDC_BTN_INITIALIZE,11,19,51,14
-    PUSHBUTTON      "Finalize",IDC_BTN_FINALIZE,65,19,51,14
+    PUSHBUTTON      "完成",IDC_BTN_FINALIZE,65,19,51,14
     PUSHBUTTON      "获取版本",IDC_BTN_GETVERSION,119,19,51,14
     PUSHBUTTON      "以太网打开",IDC_BTN_ETHERNETOPEN,6,44,55,24
     PUSHBUTTON      "以太网通讯关闭",IDC_BTN_COMMCLOSE,6,69,55,24,BS_MULTILINE
@@ -309,7 +309,7 @@ BEGIN
     CONTROL         "LJ-VB",IDC_RADIO_LJVB,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,511,162,33,10
     LTEXT           "测量范围（X轴）",IDC_STATIC_LJXMEASUREX,315,173,61,8
     COMBOBOX        IDC_CMB_LJXMEASUREX,407,171,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "稀疏范围（X轴）",IDC_STATIC_LJXTHINNING,315,188,61,8
+    LTEXT           "细化范围（X轴）",IDC_STATIC_LJXTHINNING,315,188,61,8
     COMBOBOX        IDC_CMB_LJXTHINNING,407,186,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "亮度输出",IDC_STATIC_LJXLUMINANCEOUTPUT,315,203,33,8
     COMBOBOX        IDC_CMB_LJXLUMINANCEOUTPUT,407,201,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -318,13 +318,13 @@ BEGIN
     LTEXT           "*采样周期影响binning设置",IDC_STATIC_SAMPLINGPERIODNOTE,327,231,134,8
     LTEXT           "测量范围（X轴）",IDC_STATIC_LJVMEASUREX,475,173,61,8
     COMBOBOX        IDC_CMB_LJVMEASUREX,567,171,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Thinning (X axis)",IDC_STATIC_LJVTHINNING,475,188,54,8
+    LTEXT           "细化范围（X轴）",IDC_STATIC_LJVTHINNING,475,188,61,8
     COMBOBOX        IDC_CMB_LJVTHINNING,567,186,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Binning",IDC_STATIC_LJVBINNING,476,203,24,8
     COMBOBOX        IDC_CMB_LJVBINNING,567,201,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "要保证的缓冲区大小",IDC_STATIC,547,218,96,22
-    RTEXT           "25628",IDC_STATIC_BUFFERSIZEVALUE,553,228,21,8
-    LTEXT           "每个配置文件字节",IDC_STATIC,584,228,65,8
+    GROUPBOX        "要保证的缓冲区大小",IDC_STATIC,527,218,103,22
+    RTEXT           "25628",IDC_STATIC_BUFFERSIZEVALUE,533,228,21,8
+    LTEXT           "每个配置文件字节",IDC_STATIC,564,228,65,8
     GROUPBOX        "获取测量结果",IDC_STATIC_GETPROFILE,306,244,346,28
     PUSHBUTTON      "获取配置",IDC_BTN_GETPROFILE,312,255,78,14
     PUSHBUTTON      "获取批次配置",IDC_BTN_GETBATCHPROFILEE,398,255,78,14
@@ -373,13 +373,13 @@ BEGIN
     LTEXT           "0x01：环境设置，0x02：通用测量设置，0x10：程序0，0x11：程序1，...，0x1F：程序15",IDC_STATIC,36,90,228,18
     LTEXT           "0x",IDC_STATIC,25,124,8,8
     EDITTEXT        IDC_EDIT_CATEGORY,36,120,40,14,ES_AUTOHSCROLL
-    LTEXT           "Category",IDC_STATIC,80,123,40,8
+    LTEXT           "种类/类别",IDC_STATIC,80,123,40,8
     LTEXT           "0x",IDC_STATIC,25,142,8,8
     EDITTEXT        IDC_EDIT_ITEM,36,138,40,14,ES_AUTOHSCROLL
-    LTEXT           "Setting item",IDC_STATIC,80,143,58,8
+    LTEXT           "设定项目",IDC_STATIC,80,143,58,8
     LTEXT           "0x",IDC_STATIC,25,159,8,8
     EDITTEXT        IDC_EDIT_TARGET1,36,156,40,14,ES_AUTOHSCROLL
-    LTEXT           "Setting target 1",IDC_STATIC,80,159,58,8
+    LTEXT           "设定目标1（Setting target 1）",IDC_STATIC,80,159,139,8
     LTEXT           "0x",IDC_STATIC,25,177,8,8
     EDITTEXT        IDC_EDIT_TARGET2,36,174,40,14,ES_AUTOHSCROLL
     LTEXT           "Setting target 2",IDC_STATIC,80,178,52,8
@@ -389,10 +389,10 @@ BEGIN
     LTEXT           "0x",IDC_STATIC,25,213,8,8
     EDITTEXT        IDC_EDIT_TARGET4,36,210,40,14,ES_AUTOHSCROLL
     LTEXT           "Setting target 4",IDC_STATIC,80,212,58,8
-    LTEXT           "Amount of data",IDC_STATIC,24,234,46,8
+    LTEXT           "数据量",IDC_STATIC,24,234,46,8
     EDITTEXT        IDC_EDIT_DATAAMOUNT,79,232,40,14,ES_AUTOHSCROLL
     LTEXT           "BYTE",IDC_STATIC,123,234,18,8
-    LTEXT           "Writing parameters (comma-separated hexadecimal values)",IDC_STATIC_PARAMETERNOTE,26,252,196,8
+    LTEXT           "写入参数（以逗号分隔的十六进制值）",IDC_STATIC_PARAMETERNOTE,26,252,196,8
     EDITTEXT        IDC_EDIT_PARAMETER,24,264,192,36,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,84,306,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,144,306,50,14
@@ -505,10 +505,10 @@ BEGIN
     LTEXT           "Get profile position specification method",IDC_STATIC,63,86,120,8
     LTEXT           "0x00: From current 0x01: From oldest 0x02: Specify position",IDC_STATIC,18,102,72,24
     EDITTEXT        IDC_EDIT_PROFILENO,18,138,40,14,ES_AUTOHSCROLL
-    LTEXT           "From what number profile do you want to start acquiring profiles?",IDC_STATIC,62,140,220,8
+    LTEXT           "您要从哪个号码配置文件开始获取配置文件？",IDC_STATIC,62,140,220,8
     LTEXT           "When the profile position specification is [0x02: Specify position],  specify the number of the profile to get.",IDC_STATIC,18,156,210,18
     EDITTEXT        IDC_EDIT_PROFILECNT,18,180,40,14,ES_AUTOHSCROLL
-    LTEXT           "Number of profiles to request the acquisition of",IDC_STATIC,62,184,172,8
+    LTEXT           "请求获取的配置文件数量",IDC_STATIC,62,184,172,8
     EDITTEXT        IDC_EDIT_ERASEFLG,18,204,40,14,ES_AUTOHSCROLL
     LTEXT           "Already read indication flag",IDC_STATIC,63,206,111,8
     LTEXT           "0: Do not erase the profiles that were read. 1: Erase the profiles that were read.",IDC_STATIC,18,222,270,8
@@ -521,7 +521,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Get Batch Profile"
 FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
-    LTEXT           "From what number profile do you want to start acquiring profiles : ushort format  other than that above : byte format",IDC_STATIC,18,12,204,18
+    LTEXT           "您要从哪个数字配置文件开始获取配置文件：除上述格式以外的ushort格式：字节格式",IDC_STATIC,18,12,204,18
     EDITTEXT        IDC_EDIT_TARGETBANK,18,42,40,14,ES_AUTOHSCROLL
     LTEXT           "Get profile bank specification",IDC_STATIC,63,44,87,8
     LTEXT           "0x00: Active surface 0x01: Inactive surface",IDC_STATIC,18,60,78,15
@@ -549,7 +549,7 @@ FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,18,36,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,78,36,50,14
-    LTEXT           "Send start position",IDC_STATIC,9,18,68,8,0,WS_EX_RIGHT
+    LTEXT           "发送开始位置",IDC_STATIC,9,18,68,8,0,WS_EX_RIGHT
     EDITTEXT        IDC_EDIT1,86,16,40,14,ES_AUTOHSCROLL
 END
 

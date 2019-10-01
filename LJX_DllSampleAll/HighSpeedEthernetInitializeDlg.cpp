@@ -79,6 +79,7 @@ LJX8IF_ETHERNET_CONFIG CHighSpeedEthernetInitializeDlg::GetEthernetConfig()
 	ethernetConfig.abyIpAddress[1] = (BYTE)((ipAddress & 0x00FF0000) >> 16);
 	ethernetConfig.abyIpAddress[2] = (BYTE)((ipAddress & 0x0000FF00) >> 8);
 	ethernetConfig.abyIpAddress[3] = (BYTE)( ipAddress & 0x000000FF);
+
 	ethernetConfig.wPortNo         = (WORD)m_dwCommandPort;
 	ethernetConfig.reserve[0]      = (BYTE)0;
 	ethernetConfig.reserve[1]      = (BYTE)0;

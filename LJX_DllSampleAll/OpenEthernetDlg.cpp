@@ -37,6 +37,7 @@ END_MESSAGE_MAP()
 BOOL COpenEthernetDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
 	m_iacIPAddress.SetAddress(192, 168, 0, 1);
 
 	CWnd* pWndCommandPort = GetDlgItem(IDC_PORTNUM);
@@ -60,6 +61,7 @@ LJX8IF_ETHERNET_CONFIG COpenEthernetDlg::GetEthernetConfig()
 	ethernetConfig.abyIpAddress[1] = (BYTE)((ipAddress & 0x00FF0000) >> 16);
 	ethernetConfig.abyIpAddress[2] = (BYTE)((ipAddress & 0x0000FF00) >> 8);
 	ethernetConfig.abyIpAddress[3] = (BYTE)( ipAddress & 0x000000FF);
+
 	ethernetConfig.wPortNo         = (WORD)m_nPortNum;
 	ethernetConfig.reserve[0]      = (BYTE)0;
 	ethernetConfig.reserve[1]      = (BYTE)0;
@@ -73,5 +75,7 @@ LJX8IF_ETHERNET_CONFIG COpenEthernetDlg::GetEthernetConfig()
 void COpenEthernetDlg::OnBnClickedOk()
 {
 	m_iacIPAddress.GetAddress(m_dwIPAddress);
+
+	//当用户点击OK按钮关闭对话框时要执行的动作（事件处理）
 	OnOK();
 }

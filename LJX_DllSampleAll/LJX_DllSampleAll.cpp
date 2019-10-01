@@ -23,10 +23,7 @@ CLJX_DllSampleAllApp::CLJX_DllSampleAllApp()
 
 }
 
-
-
 CLJX_DllSampleAllApp theApp;
-
 
 
 BOOL CLJX_DllSampleAllApp::InitInstance()

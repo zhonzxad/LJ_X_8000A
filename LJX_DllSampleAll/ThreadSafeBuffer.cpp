@@ -1,4 +1,4 @@
-//Copyright (c) 2019 KEYENCE CORPORATION. All rights reserved.
+﻿//Copyright (c) 2019 KEYENCE CORPORATION. All rights reserved.
 #include "StdAfx.h"
 #include "ThreadSafeBuffer.h"
 
@@ -31,10 +31,10 @@ CThreadSafeBuffer* CThreadSafeBuffer::getInstance(void)
 }
 
 /*
- @note Add the profile data
- @param Current device ID
- @param Profile data
- @param notify
+ @note添加配置文件数据
+ @param当前设备ID
+ @param个人资料数据
+ @param通知
 */
 void CThreadSafeBuffer::Add(DWORD dwIndex, vector<PROFILE_DATA> &vecProfileData, DWORD dwNotify)
 {
