@@ -28,25 +28,25 @@ protected:
 	
 private:
 	// DDX variable
-	CEdit m_txtCommandLog;									// EditBox for command log
-	CStatic m_sttConnectionStatus[LJX8IF_GUI_DEVICE_COUNT];	// Status label
-	CButton m_btnDeviceState;								// Radio button for device state 
-	CComboBox m_cmbXRange;									// Combo Box for X Range
-	CComboBox m_cmbXThinning;								// Combo Box for X Compression
-	CString m_strSpinStartTimer;							// Spin Control for Start Timer
-	CString m_strSpinProfIndex;								// Spin Control for Profile index
-	CString m_strSpinProfCount;								// Spin Control for Profile count
-	CSpinButtonCtrl m_sbcSpinStartTimer;					// Spin Control for Start Timer
-	CSpinButtonCtrl m_sbcSpinProfIndex;						// Spin Control for Profile index
-	CSpinButtonCtrl m_sbcSpinProfCount;						// Spin Control for Profile count
-	CString m_strSaveFilePath;								// Save File Path
-	CString m_strHighSpeedSaveFilePath;						// HighSpeed Save File Path
-	CComboBox m_cmbSamplingPeriod;							//Combo Box for Sampling Period
-	CComboBox m_cmbLuminanceOutput;							//Combo Box for Luminance output
-	CComboBox m_cmbLjvMeasureX;								//Combo Box for LJ-V Measure X
-	CComboBox m_cmbLjvBinning;								//Combo Box for LJ-V Binning
-	CComboBox m_cmbLjvThinning;								//Combo Box for LJ-V Thinning
-	CStatic m_sttBufferSizeValue;							//label for buffer size 
+	CEdit m_txtCommandLog;									// 用于命令日志的EditBox
+	CStatic m_sttConnectionStatus[LJX8IF_GUI_DEVICE_COUNT];	// 状态标签
+	CButton m_btnDeviceState;								// 设备状态的单选按钮 
+	CComboBox m_cmbXRange;									// X（范围）系列的组合框
+	CComboBox m_cmbXThinning;								// X压缩的组合框
+	CString m_strSpinStartTimer;							// 启动计时器的旋转控制（CString）
+	CString m_strSpinProfIndex;								// 配置文件索引的旋转控制
+	CString m_strSpinProfCount;								// 旋转控制轮廓数
+	CSpinButtonCtrl m_sbcSpinStartTimer;					// 启动计时器的旋转控制（CSpinButtonCtrl）Spin Control for Start Timer
+	CSpinButtonCtrl m_sbcSpinProfIndex;						// 配置文件索引的旋转控制（CSpinButtonCtrl）Spin Control for Profile index
+	CSpinButtonCtrl m_sbcSpinProfCount;						// 旋转控制轮廓数 （CSpinButtonCtrl）Spin Control for Profile count
+	CString m_strSaveFilePath;								// 保存文件路径
+	CString m_strHighSpeedSaveFilePath;						// 高速保存文件路径
+	CComboBox m_cmbSamplingPeriod;							// 采样期间的组合框
+	CComboBox m_cmbLuminanceOutput;							// 亮度输出组合框
+	CComboBox m_cmbLjvMeasureX;								// LJ-V测量X的组合框
+	CComboBox m_cmbLjvBinning;								// 用于LJ-V分箱的组合框 Combo Box for LJ-V Binning
+	CComboBox m_cmbLjvThinning;								// 用于LJ-V稀疏的组合框 Combo Box for LJ-V Thinning
+	CStatic m_sttBufferSizeValue;							// 缓冲区大小的标签 
 
 	int m_nCurrentDeviceID;
 	int m_nXRange;
@@ -70,16 +70,19 @@ private:
 	static const int NO_ERROR_VALUE = 0;
 
 	// Storage structure (storage status)
+	// 仓储结构（仓储对象）
 	static const int STORAGE_INFO_STATUS_EMPTY    = 0;
 	static const int STORAGE_INFO_STATUS_STORING  = 1;
 	static const int STORAGE_INFO_STATUS_FINISHED = 2;
 
 	// Storage structure (storage target)
+	// 仓储结构（仓储对象）
 	static const int STORAGE_INFO_TARGET_DATA    = 0;
 	static const int STORAGE_INFO_TARGET_PROFILE = 2;
 	static const int STORAGE_INFO_TARGET_BATCH   = 3;
 	
 	// Maximum Communication Data Size
+	// 最大通讯数据量大小
 	static const DWORD LJX8IFEX_MAXIMUM_READ_DATA_SIZE = 1024 * 1024;
 
 	static const int TIMER_ID    = 100;
@@ -87,52 +90,62 @@ private:
 	static const int BUFFER_FULL_TIMER_ID = 300;
 
 	// buffer full timer interval
+	// 缓冲区满定时器间隔
 	static const int BUFFER_FULL_TIMER_INTERVAL = 500;
 
 	//LJ-X head index of radio button
+	//LJ_X 的单选框按钮索引
 	static const int LJX_HEAD_INDEX = 0;
 
 	//LJ-VB head index of radio button
+	//LJ_VB 的单选框按钮索引
 	static const int LJVB_HEAD_INDEX = 2;
 
 	//Thinning combobox index
+	//LJ_V细化组合框索引
 	static const int LJV_THINNING_OFF_INDEX = 0;
 	static const int LJV_THINNING_2_INDEX = 1;
 
 	//Thinning combobox index
+	//LJ_X细化组合框索引
 	static const int LJX_THINNING_OFF_INDEX = 0;
 	static const int LJX_THINNING_2_INDEX = 1;
 
 	//Profile data count lower limmit 
+	//配置文件数据计数下限
 	static const int PROFILE_DATA_MIN_COUNT = 200;
 
 	//divide value for tempareture display
+	//温度显示的分度值
 	static const int DIVIDE_VALUE_FOR_HEAD_TEMPARETURE_DISPLAY = 100;
 
 	//data count in one line(get setting result)
+	//一行数据计数（获取设置结果）
 	static const int DATA_COUNT_IN_ONE_LINE = 8;
 
 	// value of not accessing memory(check memory)
+	// 不访问内存（检查内存）的值
 	static const int NOT_ACCESS_VALUE = 0;
 
 	//head temperature invalid value
+	//传感头温度初始值
 	static const int HEAD_TEMPERATURE_INVALID_VALUE = 0xFFFF;
 
 	typedef enum
 	{
-		SENDCOMMAND_NONE,												// None
-		SENDCOMMAND_REBOOT_CONTROLLER,									// Restart
-		SENDCOMMAND_TRIGGER,											// Trigger
-		SENDCOMMAND_START_MEASURE,										// Start measurement
-		SENDCOMMAND_STOP_MEASURE,										// Stop measurement
-		SENDCOMMAND_GET_PROFILE,										// Get profiles
-		SENDCOMMAND_GET_BATCH_PROFILE,									// Get batch profiles
-		SENDCOMMAND_REQUEST_STORAGE,									// Manual storage request
-		SENDCOMMAND_INITIALIZE_HIGH_SPEED_DATA_ETHERNET_COMMUNICATION,	// Initialize Ethernet high-speed data communication
-		SENDCOMMAND_PRE_START_HIGH_SPEED_DATA_COMMUNICATION,			// Request preparation before starting high-speed data communication
-		SENDCOMMAND_START_HIGH_SPEED_DATA_COMMUNICATION,				// Start high-speed data communication
-	} SENDCOMMAND;
-	SENDCOMMAND m_sendCommand;
+		SENDCOMMAND_NONE,												// 发送空 None
+		SENDCOMMAND_REBOOT_CONTROLLER,									// 发送重启 Restart
+		SENDCOMMAND_TRIGGER,											// 发送触发 Trigger
+		SENDCOMMAND_START_MEASURE,										// 发送开始测量 Start measurement
+		SENDCOMMAND_STOP_MEASURE,										// 发送停止测量 Stop measurement
+		SENDCOMMAND_GET_PROFILE,										// 发送获取轮廓数据 Get profiles
+		SENDCOMMAND_GET_BATCH_PROFILE,									// 发送获取批次配置文件 Get batch profiles
+		SENDCOMMAND_REQUEST_STORAGE,									// 发送手动存储请求 Manual storage request
+		SENDCOMMAND_INITIALIZE_HIGH_SPEED_DATA_ETHERNET_COMMUNICATION,	// 发送初始化以太网高速数据通信 Initialize Ethernet high-speed data communication
+		SENDCOMMAND_PRE_START_HIGH_SPEED_DATA_COMMUNICATION,			// 发送开始高速数据通信之前要求准备 Request preparation before starting high-speed data communication
+		SENDCOMMAND_START_HIGH_SPEED_DATA_COMMUNICATION,				// 发送开始高速数据通讯 Start high-speed data communication
+	} SENDCOMMAND; 
+	SENDCOMMAND m_sendCommand; //发送命令
 
 	BOOL OnInitDialog();
 	BOOL PreTranslateMessage(MSG* pMsg);

@@ -95,6 +95,7 @@ BOOL CCombinationFuncDlg::OnInitDialog()
 
 /*
  Check return code
+ 检查是否有正确的返回值
  @param Return code
  @return Is return code OK?(True:OK)
 */
@@ -112,6 +113,7 @@ BOOL CCombinationFuncDlg::CheckReturnCode(LONG lRc)
 /*
  Get Selected Program Target Setting
  @return LJX8IF_TARGET_SETTING
+ 获取选定的程序目标设置
 */
 LJX8IF_TARGET_SETTING CCombinationFuncDlg::GetSelectedProgramTargetSetting()
 {
@@ -145,8 +147,9 @@ LJX8IF_TARGET_SETTING CCombinationFuncDlg::GetSelectedProgramTargetSetting()
 }
 
 /*
-Get Selected Program Data Size
-@return data size
+ Get Selected Program Data Size
+ 获取选定的程序数据大小
+ @return data size
 */
 DWORD CCombinationFuncDlg::GetSelectedProgramDataSize()
 {
@@ -156,11 +159,11 @@ DWORD CCombinationFuncDlg::GetSelectedProgramDataSize()
 }
 
 /*
- callack function(receive profile data)
- @param Pointer for profile data
- @param One profile data size
- @param Profile count
- @param notify
+ 回调函数（接收配置文件数据）
+ @param配置文件数据的指针
+ @param一个配置文件数据的大小
+ @param配置文件计数器
+ @param通知
  @param UserID
 */
 void CCombinationFuncDlg::ReceiveHighSpeedData(BYTE* pBuffer, DWORD dwSize, DWORD dwCount, DWORD dwNotify, DWORD dwUser)
@@ -186,23 +189,25 @@ void CCombinationFuncDlg::ReceiveHighSpeedData(BYTE* pBuffer, DWORD dwSize, DWOR
 
 /*
  "Communication establishment" button clicked
+  通信链路建立按钮
 */
 void CCombinationFuncDlg::OnBnClickedBtnEstablishcommunication()
 {
 	UpdateData(TRUE);
 
-	// Initialize the Dll
+	// 初始化连接到DLL
 	LONG lRc = LJX8IF_Initialize();
 	if(!CheckReturnCode(lRc)) return;
 
-	// Open the communication path
-	// Generate the settings for Ethernet communication.
+	//打开通讯路径
+	//生成以太网通信的设置
 	LJX8IF_ETHERNET_CONFIG config;
 	m_iacIPAddressComb.GetAddress(config.abyIpAddress[0], config.abyIpAddress[1], config.abyIpAddress[2], config.abyIpAddress[3]);
 	config.wPortNo = m_nCommandPort;
 	config.reserve[0] = 0;
 	config.reserve[1] = 0;
-		
+	
+	//以太网链路打开
 	lRc = LJX8IF_EthernetOpen(DEVICE_ID, &config);
 
 	CheckReturnCode(lRc);
@@ -210,6 +215,7 @@ void CCombinationFuncDlg::OnBnClickedBtnEstablishcommunication()
 
 /*
  "Communication finalization" button clicked
+ 通信完成
 */
 void CCombinationFuncDlg::OnBnClickedBtnFinalizecommunication()
 {
@@ -225,7 +231,8 @@ void CCombinationFuncDlg::OnBnClickedBtnFinalizecommunication()
 }
 
 /*
-Browse ("...") button clicked
+ Browse ("...") button clicked
+ 打开选择路径
 */
 void CCombinationFuncDlg::OnBnClickedBtnreferencesavepath()
 {
@@ -241,14 +248,22 @@ void CCombinationFuncDlg::OnBnClickedBtnreferencesavepath()
 
 /*
  "Get profiles" button clicked
+  获取轮廓按钮点击事件
 */
 void CCombinationFuncDlg::OnBnClickedBtnGetprofiledata()
 {
+	//保存CSV格式操作顺序
+	/*
+	1. 首先配置LJX8IF_GET_PROFILE_RESPONSE应答方式
+	2. 调用LJX8IF_GetProfile方法获取轮廓
+	3. 根据上一步的结果进行数据压栈操作
+	4. CDataExport::ExportProfileEx内定义函数导出数据到选定的地址（CSV文件）
+	*/
 	UpdateData(TRUE);
 	
 	CProgressDlg* progressDlg = new CProgressDlg();
 	progressDlg->Create(IDD_PROGRESS_DLG, this);
-	progressDlg->SetStatus(PROFILE_PROCESSING_STATUS_COMMUNICATING);
+	progressDlg->SetStatus(PROFILE_PROCESSING_STATUS_COMMUNICATING);	//将设置的操作显示到日志框上
 
 	LJX8IF_GET_PROFILE_REQUEST request;
 	request.byTargetBank = (BYTE)PROFILEBANK_ACTIVE;
@@ -262,8 +277,11 @@ void CCombinationFuncDlg::OnBnClickedBtnGetprofiledata()
 	DWORD dwOneDataSize = GetMaxProfileDataSize();
 	DWORD dwAllDataSize = GetAllDataSize(dwOneDataSize, request.byGetProfileCount);
 	std::vector<int> vecProfileData(dwAllDataSize);
+
 	// Get profiles.
+	// 获取轮廓数据
 	LONG lRc = LJX8IF_GetProfile(DEVICE_ID, &request, &response, &profileInfo, (DWORD*)&vecProfileData.at(0), dwAllDataSize * sizeof(int));
+
 	if(!CheckReturnCode(lRc))
 	{
 		progressDlg->DestroyWindow();
@@ -273,9 +291,11 @@ void CCombinationFuncDlg::OnBnClickedBtnGetprofiledata()
 	}
 	
 	// Output the data of each profile
+	// 输出每个轮廓的数据
 	int nMultipleValue = GetIsLuminanceOutput(profileInfo) ? MULTIPLE_VALUE_FOR_LUMINANCE_OUTPUT : 1;
 	int nDataUnitSize = (sizeof(LJX8IF_PROFILE_HEADER) + sizeof(int) * profileInfo.wProfileDataCount * profileInfo.byProfileCount  * nMultipleValue + sizeof(LJX8IF_PROFILE_FOOTER)) / sizeof(int);
 	std::vector<PROFILE_DATA> vecReceiveProfileData;
+
 	for(int i = 0; i < response.byGetProfileCount; i++)
 	{
 		int *pnBlock = &vecProfileData.at(nDataUnitSize * i);
@@ -288,7 +308,9 @@ void CCombinationFuncDlg::OnBnClickedBtnGetprofiledata()
 	}
 
 	progressDlg->SetStatus(PROFILE_PROCESSING_STATUS_SAVING);
+
 	// Save the file
+	// 保存文件的形式为CSV格式
 	if (response.byGetProfileCount != 0) {
 		CDataExport::ExportProfileEx(&(vecReceiveProfileData.at(0)), m_strDataFilePath, response.byGetProfileCount);
 	}
@@ -300,9 +322,14 @@ void CCombinationFuncDlg::OnBnClickedBtnGetprofiledata()
 
 /*
  "Get batch profiles" button clicked
+  获取批次轮廓数
 */
 void CCombinationFuncDlg::OnBnClickedBtnGetbatchprofiledata()
 {
+	/*
+	相对于前面方法不同在于循环接受收到的信号
+	*/
+
 	UpdateData(TRUE);
 
 	CProgressDlg* progressDlg = new CProgressDlg();
@@ -334,19 +361,19 @@ void CCombinationFuncDlg::OnBnClickedBtnGetbatchprofiledata()
 	}
 
 	// @Point
-	// # When reading all the profiles from a single batch, the specified number of profiles may not be read.
-	//  # To read the remaining profiles after the first set of profiles have been read, set the specification method (byPositionMode)to 0x02, 
-	//   specify the batch number (dwGetBatchNo), and then set the number to start reading profiles from (dwGetProfileNo) and 
-	//   the number of profiles to read (byGetProfileCount) to values that specify a range of profiles that have not been read to read the profiles in order.
-	//  # In more detail, this process entails:
-	//   * First configure request as listed below and call this function again.
-	//      byPositionMode = LJX8IF_BATCH_POSITION_SPEC
-	//      dwGetBatchNo = batch number that was read
-	//      byGetProfileCount = Profile number of unread in the batch
-	//   * Furthermore, if all profiles in the batch are not read,update the starting position for reading profiles (request.dwGetProfileNo) and
-	//	   the number of profiles to read (request.byGetProfileCount), and then call LJX8IF_GetBatchProfile again. (Repeat this process until all the profiles have been read.)
+		//＃从单个批次读取所有配置文件时，可能无法读取指定数量的配置文件。
+		//＃要在读取第一组配置文件后读取其余配置文件，请将指定方法（byPositionMode）设置为0x02，
+		//指定批次编号（dwGetBatchNo），然后设置编号以开始从（dwGetProfileNo）和
+		//要读取的概要文件数量（byGetProfileCount），该值指定了尚未读取以按顺序读取概要文件的概要文件范围。
+		//＃更详细地说，此过程需要：
+		// *首先配置如下所示的请求，然后再次调用此函数。
+		// byPositionMode = LJX8IF_BATCH_POSITION_SPEC
+		// dwGetBatchNo =已读取的批号
+		// byGetProfileCount =批次中未读的配置文件编号
+		// *此外，如果未读取批处理中的所有配置文件，请更新读取配置文件的起始位置（request.dwGetProfileNo），然后
+		//要读取的配置文件数（request.byGetProfileCount），然后再次调用LJX8IF_GetBatchProfile。 （重复此过程，直到已读取所有配置文件。）
 
-	// Output the data of each profile
+		//输出每个配置文件的数据
 	int nMultipleValue = GetIsLuminanceOutput(profileInfo) ? MULTIPLE_VALUE_FOR_LUMINANCE_OUTPUT : 1;
 	int nDataUnitSize = (sizeof(LJX8IF_PROFILE_HEADER) + sizeof(int) * profileInfo.wProfileDataCount * profileInfo.byProfileCount * nMultipleValue + sizeof(LJX8IF_PROFILE_FOOTER)) / sizeof(int);
 	std::vector<PROFILE_DATA> vecReceiveProfileData;
@@ -362,8 +389,10 @@ void CCombinationFuncDlg::OnBnClickedBtnGetbatchprofiledata()
 	}
 
 	// Get all profiles within the batch.
+	// 获取批处理中的所有轮廓文件
 	request.byPositionMode = (BYTE)BATCHPOS_SPEC;
 	request.dwGetBatchNo = response.dwGetBatchNo;
+
 	while(response.dwGetBatchProfileCount != (response.dwGetBatchTopProfileNo + response.byGetProfileCount))
 	{
 		// Update the get profile position
@@ -392,6 +421,7 @@ void CCombinationFuncDlg::OnBnClickedBtnGetbatchprofiledata()
 	}
 
 	progressDlg->SetStatus(PROFILE_PROCESSING_STATUS_SAVING);
+
 	// Save the file
 	if (response.dwGetBatchProfileCount != 0)
 	{
@@ -412,18 +442,18 @@ void CCombinationFuncDlg::OnBnClickedBtnuploadprogram()
 	CFileDialog dialog(TRUE);
 	if (dialog.DoModal() != IDOK) return;
 
-	//Set parameter
+	// 设定参数
 	DWORD dwSizeData = GetSelectedProgramDataSize();
 	
-	//Allocate buffer
+	// 分配内存
 	std::vector<BYTE> data;
 	data.resize(dwSizeData);
 
-	// Load program data
+	// 加载程序数据
 	CStringA strPathAnsi(dialog.GetPathName());
 	std::ifstream infile(strPathAnsi, std::ios_base::in|std::ios_base::binary);	
 
-	//Validate file 
+	// 验证文件 
 	infile.seekg(0, std::ios::end);
 	size_t sizeFile = (size_t)infile.tellg();
 	if(sizeFile != dwSizeData){
@@ -434,9 +464,9 @@ void CCombinationFuncDlg::OnBnClickedBtnuploadprogram()
 	infile.seekg(0, std::ios::beg);
 	infile.read((char*)&data.at(0), dwSizeData); 
 
-	//Upload
+	// 上载
 	DWORD dwError;
-	// Parameter
+	// 参数（参量）
 	LJX8IF_TARGET_SETTING target = GetSelectedProgramTargetSetting();
 
 	LONG lRc = LJX8IF_SetSetting(DEVICE_ID, LJX8IF_SETTING_DEPTH_RUNNING, target, &data.at(0), dwSizeData, &dwError);
@@ -453,14 +483,14 @@ void CCombinationFuncDlg::OnBnClickedBtndownloadprogram()
 	if (dialog.DoModal() != IDOK) return;
 
 
-	DWORD dwSizeData = GetSelectedProgramDataSize();// Environment:60, Common:20, Program number:528
+	DWORD dwSizeData = GetSelectedProgramDataSize(); // Environment:60, Common:20, Program number:528
 	// Allocate buffer
 	std::vector<BYTE> data;
 	data.resize(dwSizeData);
 	
-	//Parameter
+	// 获取参量
 	LJX8IF_TARGET_SETTING target = GetSelectedProgramTargetSetting();
-	//Download
+	// 下载
 	LONG lRc = LJX8IF_GetSetting(DEVICE_ID, LJX8IF_SETTING_DEPTH_RUNNING, target, &data.at(0), dwSizeData);
 	if (lRc != LJX8IF_RC_OK)
 	{
@@ -468,7 +498,7 @@ void CCombinationFuncDlg::OnBnClickedBtndownloadprogram()
 		return;
 	}
 
-	//Save program data
+	// 存储参数里面的数据
 	CStringA strPathAnsi(dialog.GetPathName());
 	std::ofstream outfile(strPathAnsi, std::ios_base::out|std::ios_base::binary);
 	outfile.write((char*)&data.at(0), dwSizeData); 
@@ -501,17 +531,18 @@ void CCombinationFuncDlg::OnBnClickedBtnBeginhighspeeddatacommunication()
 	
 	DWORD dwProfileCount = m_nCallbackFrequency;
 	DWORD dwThreadId = (DWORD)DEVICE_ID;
-	// Initialize Ethernet high-speed data communication
+
+	// 初始化高速以太网数据通信
 	lRc = LJX8IF_InitializeHighSpeedDataCommunication(DEVICE_ID, &config, m_nHighSpeedPort, ReceiveHighSpeedData, dwProfileCount, dwThreadId);
 	if(!CheckReturnCode(lRc)) return;
 
-	// High-speed data communication start preparations
+	// 高速数据通信开始准备
 	LJX8IF_HIGH_SPEED_PRE_START_REQ request;
 	request.bySendPosition = m_nSendPosition;
 	lRc = LJX8IF_PreStartHighSpeedDataCommunication(DEVICE_ID, &request, &m_profileInfo);
 	if(!CheckReturnCode(lRc)) return;
 
-	// Start high-speed data communication.
+	// 启动高速以太网通信
 	lRc = LJX8IF_StartHighSpeedDataCommunication(DEVICE_ID);
 	if (!CheckReturnCode(lRc)) return;
 	
@@ -571,7 +602,8 @@ void CCombinationFuncDlg::OnTimer(UINT_PTR nIDEvent)
 }
 
 /*
-Get is luminance output
+ Get is luminance output
+ 获取的是亮度值输出
 */
 BOOL CCombinationFuncDlg::GetIsLuminanceOutput(LJX8IF_PROFILE_INFO profileInfo)
 {

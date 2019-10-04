@@ -68,6 +68,7 @@ BOOL CHighSpeedEthernetInitializeDlg::OnInitDialog()
 // CHighSpeedEthernetInitializeDlg Message handler
 /*
  Get Ethernet config
+ 获取当前以太网的配置（主要指的是IP地址和端口号配置）
  @return LJX8IF_ETHERNET_CONFIG
 */
 LJX8IF_ETHERNET_CONFIG CHighSpeedEthernetInitializeDlg::GetEthernetConfig()

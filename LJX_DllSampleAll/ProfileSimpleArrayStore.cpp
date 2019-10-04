@@ -20,8 +20,10 @@ CProfileSimpleArrayStore::~CProfileSimpleArrayStore()
 }
 
 /*
-@note Get stored profile count
-@return profile count
+ @note获取存储的配置文件数量
+ @返回轮廓计数
+ @note Get stored profile count
+ @return profile count
 */
 DWORD CProfileSimpleArrayStore::GetCount()
 {

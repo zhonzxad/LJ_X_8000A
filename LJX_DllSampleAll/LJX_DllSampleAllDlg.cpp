@@ -102,8 +102,11 @@ BOOL CLJX_DllSampleAllDlg::OnInitDialog()
 		m_combinationFuncDlg.MoveWindow(&rectLabel, FALSE);
 
 		// Tab making
-		m_xcTab.InsertItem(0, _T("[DLL functions] Simple function sample"));
-		m_xcTab.InsertItem(1, _T("[DLL functions] Combination function sample"));
+		//m_xcTab.InsertItem(0, _T("[DLL functions] Simple function sample"));
+		//m_xcTab.InsertItem(1, _T("[DLL functions] Combination function sample"));
+
+		m_xcTab.InsertItem(0, _T("[DLL函数]简单函数示例"));
+		m_xcTab.InsertItem(1, _T("[DLL函数]组合函数示例"));
 
 		OnTcnSelchangeTab(0,0);
 	}

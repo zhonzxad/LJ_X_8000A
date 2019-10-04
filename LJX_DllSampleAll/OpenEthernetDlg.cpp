@@ -49,8 +49,9 @@ BOOL COpenEthernetDlg::OnInitDialog()
 
 // COpenEthernetDlg Message handler
 /*
- Get Ethernet Config
- @return LJX8IF_ETHERNET_CONFIG
+  Get Ethernet Config
+  @return LJX8IF_ETHERNET_CONFIG
+  主要指的是IP地址和相应的端口号配置
 */
 LJX8IF_ETHERNET_CONFIG COpenEthernetDlg::GetEthernetConfig()
 {
