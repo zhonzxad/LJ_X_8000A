@@ -326,9 +326,7 @@ void CCombinationFuncDlg::OnBnClickedBtnGetprofiledata()
 */
 void CCombinationFuncDlg::OnBnClickedBtnGetbatchprofiledata()
 {
-	/*
-	相对于前面方法不同在于循环接受收到的信号
-	*/
+	//相对于前面方法不同在于循环接受收到的信号
 
 	UpdateData(TRUE);
 

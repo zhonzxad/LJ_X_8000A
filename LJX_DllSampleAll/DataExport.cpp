@@ -1,4 +1,4 @@
-//Copyright (c) 2019 KEYENCE CORPORATION. All rights reserved.
+﻿//Copyright (c) 2019 KEYENCE CORPORATION. All rights reserved.
 #include "StdAfx.h"
 #include "DataExport.h"
 
@@ -15,9 +15,9 @@ CDataExport::~CDataExport(void)
 }
 
 /*
-Get file path for saving
-@param original file name
-@param file name addition to original name
+获取要保存的文件路径
+@param原始文件名
+@param文件名除原始名称外
 */
 CString CDataExport::GetDeterminantFilePath(CString strFilePath, CString strFileAdditionalName)
 {
@@ -34,11 +34,11 @@ CString CDataExport::GetDeterminantFilePath(CString strFilePath, CString strFile
 }
 
 /*
- Export profile data
- @param Profile data
- @param Original file name
- @param The number of the profiles to export
- @return Did the export succeed?(True:Success)
+  导出轮廓文件数据
+  @param 轮廓数据
+  @param 原始文件名
+  @param 要导出的轮廓数
+  @return 是否到处成功 (True:Success)
  */
 BOOL CDataExport::ExportProfileEx(const PROFILE_DATA *profileData, CString strFileName, int nProfileCount)
 {
@@ -57,7 +57,7 @@ BOOL CDataExport::ExportProfileEx(const PROFILE_DATA *profileData, CString strFi
 
 
 /*
-Export profile data
+具体执行到处CSV文件的函数
 @param Profile data
 @param File name for saving
 @param The number of the profiles to export

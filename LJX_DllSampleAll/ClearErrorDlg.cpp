@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 
 // CClearErrorDlg Message handler
 /*
- Get error code
+ »ñÈ¡´íÎóÂë
  @return Error code
 */
 WORD CClearErrorDlg::GetErrCode()

@@ -37,7 +37,7 @@ END_MESSAGE_MAP()
 
 // CControlLaserDlg Message handler
 /*
-Get Laser status
+»ñÈ¡¼¤¹â×´Ì¬
 @return Laser status
 */
 BYTE CControlLaserDlg::GetLaserStatus()

@@ -108,8 +108,9 @@ bool CProfileSimpleArrayStore::AddReceivedData(WORD* pwProfileBuffer, WORD* pwLu
 		m_vecLuminanceData.insert(m_vecLuminanceData.end(), &pwLuminanceBuffer[0], &pwLuminanceBuffer[dataSize]);
 	}
 
-	return m_dwCount >= BUFFER_FULL_COUNT;
 	singleLock.Unlock();
+
+	return m_dwCount >= BUFFER_FULL_COUNT;
 }
 
 /*
@@ -133,14 +134,21 @@ void CProfileSimpleArrayStore::Clear()
 }
 
 /*
-@note Save current profile data and luminance data to image file
-@param The file path to save
-@param Index of the profile to save
-@param Number of profile to save
-@return True if save succeed
+@note将当前配置文件数据和亮度数据保存到图像文件
+@param要保存的文件路径
+@param要保存的配置文件的索引
+@param要保存的配置文件数量
+@return如果保存成功，则为True
 */
 bool CProfileSimpleArrayStore::SaveDataAsImages(CString strFilePath, DWORD dwIndex, DWORD dwCount)
 {
+	/*
+	使用C
+	通过对互斥的控制达到共享资源的互斥访问；如果一个线程占正在访问互斥，那么系统将挂起当前的调用线程，
+	直到这个互斥被释放为止，这时，被挂起的线程将被唤醒并取得对互斥的控制；一般来说使用锁需要Lock,Unlock两步，而使用CSingleLock时，
+	只需要一步即可，即在函数内部，声明一个CSingleLock，同时指定互斥对象的指针，在函数执行完毕的时候，会自动执行CSingleLock的析构函数，从而解锁
+	*/ 
+
 	CSingleLock singleLock(&m_csDataAccess);
 	singleLock.Lock();
 
@@ -152,9 +160,11 @@ bool CProfileSimpleArrayStore::SaveDataAsImages(CString strFilePath, DWORD dwInd
 	SaveTiff(dwIndex, dwCount, strFilePath);
 
 	singleLock.Unlock();
+
 	return true;
 }
 
+//存储bmp图像调用函数
 void CProfileSimpleArrayStore::SaveBitmap(DWORD dwIndex, DWORD dwCount, CString strPathBase)
 {
 	const CString heightSuffix("_height.bmp");
@@ -163,12 +173,14 @@ void CProfileSimpleArrayStore::SaveBitmap(DWORD dwIndex, DWORD dwCount, CString 
 	CString strHeightFilePath = CDataExport::GetDeterminantFilePath(strPathBase, heightSuffix);
 	SaveBitmapCore(strHeightFilePath, &m_vecProfileData[dwIndex * m_nDataWidth], m_nDataWidth, dwCount);
 
-	if (m_bIsLuminanceEnable) {
+	if (m_bIsLuminanceEnable) 
+	{
 		CString strLuminanceFilePath = CDataExport::GetDeterminantFilePath(strPathBase, luminanceSuffix);
 		SaveBitmapCore(strLuminanceFilePath, &m_vecLuminanceData[dwIndex * m_nDataWidth], m_nDataWidth, dwCount);
 	}
 }
 
+//存储tiff具体调用函数
 void CProfileSimpleArrayStore::SaveTiff(DWORD dwIndex, DWORD dwCount, CString strPathBase)
 {
 	const CString heightSuffix("_height.tif");
@@ -177,12 +189,14 @@ void CProfileSimpleArrayStore::SaveTiff(DWORD dwIndex, DWORD dwCount, CString st
 	CString strHeightFilePath = CDataExport::GetDeterminantFilePath(strPathBase, heightSuffix);
 	SaveTiffCore(strHeightFilePath, &m_vecProfileData[dwIndex * m_nDataWidth], m_nDataWidth, dwCount);
 
-	if (m_bIsLuminanceEnable) {
+	if (m_bIsLuminanceEnable) 
+	{
 		CString strLuminanceFilePath = CDataExport::GetDeterminantFilePath(strPathBase, luminanceSuffix);
 		SaveTiffCore(strLuminanceFilePath, &m_vecLuminanceData[dwIndex * m_nDataWidth], m_nDataWidth, dwCount);
 	}
 }
 
+//存储位图核心方法
 void CProfileSimpleArrayStore::SaveBitmapCore(CString strFilePath, WORD* data, DWORD dwWidth, DWORD dwHeight)
 {
 	int imageSize = dwWidth * dwHeight * sizeof(WORD);
@@ -216,16 +230,20 @@ void CProfileSimpleArrayStore::SaveBitmapCore(CString strFilePath, WORD* data, D
 	fwrite(&bmpHead, sizeof(BITMAPFILEHEADER), 1, fBmp);
 	fwrite(&bmpInfo, sizeof(BITMAPINFOHEADER), 1, fBmp);
 	fwrite(dwBitField, sizeof(DWORD), 3, fBmp);
-	for (int i = dwHeight-1; i >= 0; i--) {
+
+	for (int i = dwHeight-1; i >= 0; i--) 
+	{
 		fwrite(data + (dwWidth*i), sizeof(WORD), dwWidth, fBmp);
 	}
+
 	// @Point
-	// # The bitmap pixel array data format is bottom-up. 
-	//   Last row of profile is stored the top of pixel array and first row of profile is stored last.
+	//＃位图像素数组的数据格式是自下而上的。
+	//配置文件的最后一行存储在像素数组的顶部，配置文件的第一行存储在最后。
 
 	fclose(fBmp);
 }
 
+//存储tiff核心代码
 void CProfileSimpleArrayStore::SaveTiffCore(CString strFilePath, WORD* data, DWORD dwWidth, DWORD dwHeight)
 {
 	CStringA astrFilePath(strFilePath);

@@ -43,6 +43,7 @@ END_MESSAGE_MAP()
 // CDepthProgramSelectDlg Message handler
 /*
  Displya only the necessary parameter
+ 仅显示必要的参数
  @param Display flag
  @param Status
 */

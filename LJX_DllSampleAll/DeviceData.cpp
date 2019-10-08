@@ -91,6 +91,7 @@ PROFILE_DATA::PROFILE_DATA(const PROFILE_DATA& obj)
 	}
 }
 
+//获取是否有亮度值输出 
 BOOL PROFILE_DATA::GetIsLuminanceOutput(LJX8IF_PROFILE_INFO profileInfo)
 {
 	return profileInfo.byLuminanceOutput == LUMINANCE_OUTPUT_ON_VALUE;
@@ -98,6 +99,7 @@ BOOL PROFILE_DATA::GetIsLuminanceOutput(LJX8IF_PROFILE_INFO profileInfo)
 
 /*
  Destructor for PROFILE_DATA
+ 销毁轮廓数据
 */
 PROFILE_DATA::~PROFILE_DATA()
 {

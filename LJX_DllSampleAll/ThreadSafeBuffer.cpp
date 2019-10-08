@@ -21,6 +21,11 @@ CThreadSafeBuffer::~CThreadSafeBuffer(void)
 	}
 }
 
+/*
+ 新建一个对象相关的对象
+ 使用了new的方法
+ 返回一个CThreadSafeBuffer的对象指针
+*/
 CThreadSafeBuffer* CThreadSafeBuffer::getInstance(void)
 { 
 	if(m_threadSafeBuffer == 0)
@@ -98,6 +103,10 @@ void CThreadSafeBuffer::Get(DWORD dwIndex, DWORD* pdwNotify, int* pnBatchNo, vec
  @param Current device ID
  @param Notify
  @param Batch Number
+ @note  获取轮廓数量
+ @param 当前设备ID
+ @param 通知注意
+ @param 批号
 */
 DWORD CThreadSafeBuffer::GetCount(DWORD dwIndex, DWORD* pdwNotify, int* pnBatchNo)
 {
@@ -108,9 +117,9 @@ DWORD CThreadSafeBuffer::GetCount(DWORD dwIndex, DWORD* pdwNotify, int* pnBatchN
 	m_adwNotify[dwIndex] = 0;
 	*pnBatchNo = m_anBatchNo[dwIndex];
 
-	return m_adwCount[dwIndex];
-	
 	singleLock.Unlock();
+
+	return m_adwCount[dwIndex];
 }
 
 /*
