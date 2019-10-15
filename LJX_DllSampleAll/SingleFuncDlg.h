@@ -263,4 +263,6 @@ private:
 	afx_msg void OnEnKillfocusEditStarttimer();
 	afx_msg void OnEnKillfocusEditProfileindex();
 	afx_msg void OnEnKillfocusEditProfilecount();
+public:
+	afx_msg void OnBnClickedButFlowwork();
 };
