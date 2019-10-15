@@ -260,58 +260,58 @@ void CProfileSimpleArrayStore::SaveTiffCore(CString strFilePath, WORD* data, DWO
 
 void CProfileSimpleArrayStore::WriteTiffHeader(FILE* fTif, DWORD dwWidth, DWORD dwHeight)
 {
-	// <header(8)> + <tag count(2)> + <tag(12)> * 12 + <next IFD(4)> + <resolution unit(8)> * 2
+	// <header(8)> + <标签计数(2)> + <tag(12)> * 12 + <next IFD(4)> + <分辨率（单位） unit(8)> * 2
 	const unsigned int stripOffset = 174;
 
 	// Header (little endian)
 	byte header[8] = { 0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00 };
 	fwrite(header, sizeof(byte), 8, fTif);
 
-	// Tag count
+	// 标签计数
 	byte tagCount[2] = { 0x0C, 0x00 };
 	fwrite(tagCount, sizeof(byte), 2, fTif);
 	
-	// Image Width
+	// 图像宽度
 	WriteTiffTag(fTif, 0x0100, 3, 1, dwWidth);
 
-	// Image Length
+	// 图像长度
 	WriteTiffTag(fTif, 0x0101, 3, 1, dwHeight);
 
-	// Bits per sample
+	// 每个样本的位数  Bits per sample
 	WriteTiffTag(fTif, 0x0102, 3, 1, 16);
 
-	// Compression (no compression)
+	// 压缩（不压缩）  Compression (no compression)
 	WriteTiffTag(fTif, 0x0103, 3, 1, 1);
 
-	// Photometric interpretation (white mode & monochrome)
+	// 光度解释（白色模式和单色） Photometric interpretation (white mode & monochrome)
 	WriteTiffTag(fTif, 0x0106, 3, 1, 1);
 
-	// Strip offsets
+	// 带偏移量 Strip offsets
 	WriteTiffTag(fTif, 0x0111, 3, 1, stripOffset);
 
-	// Rows per strip
+	// 行每条  Rows per strip
 	WriteTiffTag(fTif, 0x0116, 3, 1, dwHeight);
 
-	// strip byte counts
+	// 条字节数 strip byte counts
 	WriteTiffTag(fTif, 0x0117, 4, 1, dwWidth * dwHeight * 2);
 
-	// X resolusion address
+	// X解决地址 X resolusion address
 	WriteTiffTag(fTif, 0x011A, 5, 1, stripOffset - 16);
 
-	// Y resolusion address
+	// Y解决地址 Y resolusion address
 	WriteTiffTag(fTif, 0x011B, 5, 1, stripOffset - 8);
 
-	// Resolusion unit (inch)
+	// 分辨率单位（英寸） Resolusion unit (inch)
 	WriteTiffTag(fTif, 0x0128, 3, 1, 2);
 
-	// Color map (not use color map)
+	// 彩色地图(不使用彩色地图) Color map (not use color map)
 	WriteTiffTag(fTif, 0x0140, 3, 1, 0);
 
 	// Next IFD
 	int nextIfd = 0;
 	fwrite(&nextIfd, sizeof(int), 1, fTif);
 
-	// X resolusion and Y resolusion
+	// X分辨率和Y分辨率  X resolusion and Y resolusion
 	int xResolusion[2] = { 96, 1 };
 	fwrite(&xResolusion, sizeof(int), 2, fTif);
 	int yResolusion[2] = { 96, 1 };

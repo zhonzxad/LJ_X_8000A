@@ -47,6 +47,7 @@ BOOL CDataExport::ExportProfileEx(const PROFILE_DATA *profileData, CString strFi
 
 	CString strFileNameForHeight = GetDeterminantFilePath(strFileName, HEIGHT_DATA_ADDITIONAL_FILE_PATH);
 	BOOL isSuccess = ExportMultipleData(profileData, strFileNameForHeight, nProfileCount, PROFILE_DATA_START_INDEX);
+
 	if (!isSuccess) return FALSE;
 	if (profileData[0].m_profileInfo.byLuminanceOutput != LUMINANCE_OUTPUT_ON_VALUE) return isSuccess;
 
