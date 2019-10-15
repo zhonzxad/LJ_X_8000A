@@ -108,7 +108,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>E:\VS-Debug\LJ_X_8000A\lib\include;..\..\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\LJ_X_8000A\lib\include;E:\VS-Debug\LJ_X_8000A\lib\include;..\..\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -127,7 +127,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>LJX8_IF.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\VS-Debug\LJ_X_8000A\lib\x86;..\..\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\LJ_X_8000A\lib\x86;E:\VS-Debug\LJ_X_8000A\lib\x86;..\..\lib\x86</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <PostBuildEvent>
