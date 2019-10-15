@@ -37,7 +37,7 @@ private:
 	CString m_strSpinProfIndex;								// 配置文件索引的旋转控制
 	CString m_strSpinProfCount;								// 旋转控制轮廓数
 	CSpinButtonCtrl m_sbcSpinStartTimer;					// 启动计时器的旋转控制（CSpinButtonCtrl）Spin Control for Start Timer
-	CSpinButtonCtrl m_sbcSpinProfIndex;						// 配置文件索引的旋转控制（CSpinButtonCtrl）Spin Control for Profile index
+	CSpinButtonCtrl m_sbcSpinProfIndex;						// 轮廓索引的旋转控制（CSpinButtonCtrl）Spin Control for Profile index
 	CSpinButtonCtrl m_sbcSpinProfCount;						// 旋转控制轮廓数 （CSpinButtonCtrl）Spin Control for Profile count
 	CString m_strSaveFilePath;								// 保存文件路径
 	CString m_strHighSpeedSaveFilePath;						// 高速保存文件路径
