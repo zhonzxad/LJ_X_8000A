@@ -265,4 +265,5 @@ private:
 	afx_msg void OnEnKillfocusEditProfilecount();
 public:
 	afx_msg void OnBnClickedButFlowwork();
+	BOOL ClearMark = 0;
 };
