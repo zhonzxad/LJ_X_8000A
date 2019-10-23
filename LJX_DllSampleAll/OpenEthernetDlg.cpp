@@ -55,6 +55,14 @@ BOOL COpenEthernetDlg::OnInitDialog()
 */
 LJX8IF_ETHERNET_CONFIG COpenEthernetDlg::GetEthernetConfig()
 {
+	//不用弹框设置地址操作
+	/*USES_CONVERSION;
+	CString strIP = _T("192.168.1.0");
+	DWORD ipAddress = ntohl(inet_addr(T2A(strIP)));
+
+	int portNum = 24691;*/
+
+
 	LJX8IF_ETHERNET_CONFIG ethernetConfig;
 	DWORD ipAddress = m_dwIPAddress;
 

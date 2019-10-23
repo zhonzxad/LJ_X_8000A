@@ -70,8 +70,8 @@ typedef struct {
 
 /// Ethernet settings structure
 typedef struct {
-	BYTE	abyIpAddress[4];	// The IP address of the controller to connect to.
-	WORD	wPortNo;			// The port number of the controller to connect to.
+	BYTE	abyIpAddress[4];	// 要连接的控制器的IP地址.
+	WORD	wPortNo;			// 要连接的控制器的端口号
 	BYTE	reserve[2];			// Reserved
 } LJX8IF_ETHERNET_CONFIG;
 
