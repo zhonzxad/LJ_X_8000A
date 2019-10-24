@@ -73,15 +73,20 @@ BOOL CHighSpeedEthernetInitializeDlg::OnInitDialog()
 */
 LJX8IF_ETHERNET_CONFIG CHighSpeedEthernetInitializeDlg::GetEthernetConfig()
 {
+	//宏定义使用
+	USES_CONVERSION;
+
 	LJX8IF_ETHERNET_CONFIG ethernetConfig;
-	DWORD ipAddress = m_dwIPAddress;
+	//DWORD ipAddress = m_dwIPAddress;
+	DWORD ipAddress = ntohl(inet_addr(T2A(strIP)));
 
 	ethernetConfig.abyIpAddress[0] = (BYTE)((ipAddress & 0xFF000000) >> 24);
 	ethernetConfig.abyIpAddress[1] = (BYTE)((ipAddress & 0x00FF0000) >> 16);
 	ethernetConfig.abyIpAddress[2] = (BYTE)((ipAddress & 0x0000FF00) >> 8);
 	ethernetConfig.abyIpAddress[3] = (BYTE)( ipAddress & 0x000000FF);
 
-	ethernetConfig.wPortNo         = (WORD)m_dwCommandPort;
+	//ethernetConfig.wPortNo         = (WORD)m_dwCommandPort;
+	ethernetConfig.wPortNo		   = (WORD)PortNum;
 	ethernetConfig.reserve[0]      = (BYTE)0;
 	ethernetConfig.reserve[1]      = (BYTE)0;
 

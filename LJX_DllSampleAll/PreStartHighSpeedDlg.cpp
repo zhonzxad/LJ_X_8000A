@@ -52,11 +52,15 @@ BOOL CPreStartHighSpeedDlg::OnInitDialog()
 /*
  Get PreStart HighSpeed Communication Request
  @return LJX8IF_HIGH_SPEED_PRE_START_REQ
+ 作用仅是获取轮廓的启示位置，直接设置值即可
 */
 LJX8IF_HIGH_SPEED_PRE_START_REQ CPreStartHighSpeedDlg::getHighSpeedPreStartReq()
 {
+	/*LJX8IF_HIGH_SPEED_PRE_START_REQ req;
+	req.bySendPosition = m_bySendPos;*/
+
 	LJX8IF_HIGH_SPEED_PRE_START_REQ req;
-	req.bySendPosition = m_bySendPos;
+	req.bySendPosition = SendPosNum;
 
 	return req;
 }

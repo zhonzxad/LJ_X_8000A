@@ -160,7 +160,7 @@ typedef struct {
 
 /// High-speed communication prep start request structure
 typedef struct {
-	BYTE	bySendPosition;			// Send start position
+	BYTE	bySendPosition;			// 发送开始位置 Send start position
 	BYTE	reserve[3];				// Reserved
 } LJX8IF_HIGH_SPEED_PRE_START_REQ;
 
