@@ -14,6 +14,7 @@ IMPLEMENT_DYNAMIC(CPreStartHighSpeedDlg, CDialog)
 CPreStartHighSpeedDlg::CPreStartHighSpeedDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPreStartHighSpeedDlg::IDD, pParent)
 	, m_bySendPos(2)
+	, SendPosNum(2)
 {
 }
 
@@ -56,11 +57,11 @@ BOOL CPreStartHighSpeedDlg::OnInitDialog()
 */
 LJX8IF_HIGH_SPEED_PRE_START_REQ CPreStartHighSpeedDlg::getHighSpeedPreStartReq()
 {
-	/*LJX8IF_HIGH_SPEED_PRE_START_REQ req;
-	req.bySendPosition = m_bySendPos;*/
-
 	LJX8IF_HIGH_SPEED_PRE_START_REQ req;
-	req.bySendPosition = SendPosNum;
+	req.bySendPosition = m_bySendPos;
+
+	/*LJX8IF_HIGH_SPEED_PRE_START_REQ req;
+	req.bySendPosition = SendPosNum;*/
 
 	return req;
 }
