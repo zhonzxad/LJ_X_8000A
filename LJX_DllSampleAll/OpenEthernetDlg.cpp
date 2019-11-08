@@ -59,8 +59,8 @@ LJX8IF_ETHERNET_CONFIG COpenEthernetDlg::GetEthernetConfig()
 	USES_CONVERSION;
 
 	LJX8IF_ETHERNET_CONFIG ethernetConfig;
-	//DWORD ipAddress = m_dwIPAddress;
-	DWORD ipAddress = ntohl(inet_addr(T2A(strIP)));
+	DWORD ipAddress = m_dwIPAddress;
+	//DWORD ipAddress = ntohl(inet_addr(T2A(strIP)));
 
 	ethernetConfig.abyIpAddress[0] = (BYTE)((ipAddress & 0xFF000000) >> 24);
 	ethernetConfig.abyIpAddress[1] = (BYTE)((ipAddress & 0x00FF0000) >> 16);
