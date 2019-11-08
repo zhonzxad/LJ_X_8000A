@@ -70,8 +70,8 @@ typedef struct {
 
 /// Ethernet settings structure
 typedef struct {
-	BYTE	abyIpAddress[4];	// The IP address of the controller to connect to.
-	WORD	wPortNo;			// The port number of the controller to connect to.
+	BYTE	abyIpAddress[4];	// 要连接的控制器的IP地址.
+	WORD	wPortNo;			// 要连接的控制器的端口号
 	BYTE	reserve[2];			// Reserved
 } LJX8IF_ETHERNET_CONFIG;
 
@@ -160,7 +160,7 @@ typedef struct {
 
 /// High-speed communication prep start request structure
 typedef struct {
-	BYTE	bySendPosition;			// Send start position
+	BYTE	bySendPosition;			// 发送开始位置 Send start position
 	BYTE	reserve[3];				// Reserved
 } LJX8IF_HIGH_SPEED_PRE_START_REQ;
 

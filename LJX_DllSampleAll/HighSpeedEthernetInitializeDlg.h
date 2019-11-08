@@ -36,4 +36,12 @@ private:
 	CIPAddressCtrl m_iacIPAddress;
 	DWORD m_dwIPAddress;
 	DWORD m_dwCommandPort;
+
+public:
+	//ÆÁ±Îµ¯´°²Ù×÷
+	CString strIP = _T("192.168.1.0");
+
+	int PortNum = 24691;
+	int HeighPortNum = 24692;
+	int ProfileCount = 1;
 };

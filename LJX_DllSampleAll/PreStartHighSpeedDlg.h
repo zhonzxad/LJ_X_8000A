@@ -25,4 +25,7 @@ protected:
 
 private:
 	BYTE m_bySendPos;
+
+public:
+	BYTE SendPosNum;
 };

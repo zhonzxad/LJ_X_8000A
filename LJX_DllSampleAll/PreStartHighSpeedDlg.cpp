@@ -14,6 +14,7 @@ IMPLEMENT_DYNAMIC(CPreStartHighSpeedDlg, CDialog)
 CPreStartHighSpeedDlg::CPreStartHighSpeedDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPreStartHighSpeedDlg::IDD, pParent)
 	, m_bySendPos(2)
+	, SendPosNum(2)
 {
 }
 
@@ -52,11 +53,15 @@ BOOL CPreStartHighSpeedDlg::OnInitDialog()
 /*
  Get PreStart HighSpeed Communication Request
  @return LJX8IF_HIGH_SPEED_PRE_START_REQ
+ 作用仅是获取轮廓的启示位置，直接设置值即可
 */
 LJX8IF_HIGH_SPEED_PRE_START_REQ CPreStartHighSpeedDlg::getHighSpeedPreStartReq()
 {
 	LJX8IF_HIGH_SPEED_PRE_START_REQ req;
 	req.bySendPosition = m_bySendPos;
+
+	/*LJX8IF_HIGH_SPEED_PRE_START_REQ req;
+	req.bySendPosition = SendPosNum;*/
 
 	return req;
 }

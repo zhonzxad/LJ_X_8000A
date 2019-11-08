@@ -55,15 +55,20 @@ BOOL COpenEthernetDlg::OnInitDialog()
 */
 LJX8IF_ETHERNET_CONFIG COpenEthernetDlg::GetEthernetConfig()
 {
+	//不用弹框设置地址操作
+	USES_CONVERSION;
+
 	LJX8IF_ETHERNET_CONFIG ethernetConfig;
-	DWORD ipAddress = m_dwIPAddress;
+	//DWORD ipAddress = m_dwIPAddress;
+	DWORD ipAddress = ntohl(inet_addr(T2A(strIP)));
 
 	ethernetConfig.abyIpAddress[0] = (BYTE)((ipAddress & 0xFF000000) >> 24);
 	ethernetConfig.abyIpAddress[1] = (BYTE)((ipAddress & 0x00FF0000) >> 16);
 	ethernetConfig.abyIpAddress[2] = (BYTE)((ipAddress & 0x0000FF00) >> 8);
 	ethernetConfig.abyIpAddress[3] = (BYTE)( ipAddress & 0x000000FF);
 
-	ethernetConfig.wPortNo         = (WORD)m_nPortNum;
+	//ethernetConfig.wPortNo         = (WORD)m_nPortNum;
+	ethernetConfig.wPortNo		   = (WORD)PortNum;
 	ethernetConfig.reserve[0]      = (BYTE)0;
 	ethernetConfig.reserve[1]      = (BYTE)0;
 
@@ -77,6 +82,8 @@ void COpenEthernetDlg::OnBnClickedOk()
 {
 	m_iacIPAddress.GetAddress(m_dwIPAddress);
 
+	/*USES_CONVERSION;
+	m_iacIPAddress.GetAddress((DWORD)ntohl(inet_addr(T2A(_T("192.168.1.0")))));*/
 	//当用户点击OK按钮关闭对话框时要执行的动作（事件处理）
 	OnOK();
 }

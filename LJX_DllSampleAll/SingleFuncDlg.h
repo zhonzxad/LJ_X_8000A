@@ -266,4 +266,8 @@ private:
 public:
 	afx_msg void OnBnClickedButFlowwork();
 	BOOL ClearMark = 0;
+	BOOL ReceiveEnough = 0;
+	afx_msg void OnBnClickedButOpencam();
+	afx_msg void OnBnClickedButStartcamMeasure();
+	afx_msg void OnBnClickedButClosecam();
 };
