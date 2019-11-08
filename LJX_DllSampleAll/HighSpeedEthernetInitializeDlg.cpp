@@ -47,9 +47,13 @@ BOOL CHighSpeedEthernetInitializeDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	m_iacIPAddress.SetAddress(ethernetConfig.abyIpAddress[0], ethernetConfig.abyIpAddress[1], ethernetConfig.abyIpAddress[2], ethernetConfig.abyIpAddress[3]);
+	//m_iacIPAddress.SetAddress(ethernetConfig.abyIpAddress[0], ethernetConfig.abyIpAddress[1], ethernetConfig.abyIpAddress[2], ethernetConfig.abyIpAddress[3]);
 	
-	m_dwCommandPort = ethernetConfig.wPortNo;
+	//m_dwCommandPort = ethernetConfig.wPortNo;
+
+	m_iacIPAddress.SetAddress(192, 168, 0, 1);
+	m_dwCommandPort = 24691;
+
 	UpdateData(FALSE);
 
 	CWnd* pWndCommandPort = GetDlgItem(IDC_EDIT_COMMANDPORT);
