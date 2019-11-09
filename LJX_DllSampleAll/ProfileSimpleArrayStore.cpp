@@ -71,6 +71,8 @@ DWORD CProfileSimpleArrayStore::GetNotify()
 /*
 @note Set notify flag
 @param notify flag
+@note设置通知标志
+@param通知标志
 */
 void CProfileSimpleArrayStore::AddNotify(DWORD dwNotify)
 {
@@ -89,6 +91,11 @@ void CProfileSimpleArrayStore::AddNotify(DWORD dwNotify)
 @param A pointer to the buffer that stores the luminance profile data array
 @param The number of profile data stored in buffer
 @return True if buffer full.
+@note从设备添加接收到的简单数组数据
+@param指向存储配置文件数据数组的缓冲区的指针
+@param指向存储亮度分布数据数组的缓冲区的指针
+@param缓冲区中存储的配置文件数据的数量
+@return如果缓冲区已满，则为True。
 */
 bool CProfileSimpleArrayStore::AddReceivedData(WORD* pwProfileBuffer, WORD* pwLuminanceBuffer, DWORD dwCount)
 {
